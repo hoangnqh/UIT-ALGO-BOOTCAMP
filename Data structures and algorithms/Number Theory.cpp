@@ -169,4 +169,13 @@ int32_t main(){
     */
     cout << "nCr Lucas" << endl;
     cout << nCrLucas(5, 3, 17) << endl;
+
+    /// nCr with small n
+    vector<vector<int> > c(1005, vector<int> (1005, 0));
+    for(int i = 0; i <= 1000; i++){
+        for(int j = 0; j <= i; j++){
+            if(i == 0 || j == 0) c[i][j] = 1;
+            else c[i][j] = (c[i - 1][j - 1] + c[i - 1][j]) % MOD;
+        }
+    }
 }
