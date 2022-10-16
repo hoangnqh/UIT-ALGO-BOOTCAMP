@@ -1,26 +1,32 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
+
+#define int long long
 
 #define fi first
 #define se second
-#define mp make_pair
 #define pb push_back
-#define ll long long
+#define mp make_pair
 #define ld long double
 
-//#define int long long
-
 typedef pair<int, int> II;
-typedef pair<int, II> III;
+typedef pair<string, II> III;
 
-const int INF = (1 << 30) - 1;
-const long long oo = (1ll << 62) - 1;
-const long double PI = 3.1415926535898;
+int dx[] = {0, 1, 0, -1};
+int dy[] = {1, 0, -1, 0};
+
+const int INF = 1e18;
+const int MOD = 1e9 + 7;
+const int N = 1e5 + 5;
 
 struct Trie
 {
     struct node{
-        int num, val;
+        /*
+            sum: giá trị tổng nút
+            val: giá trị tại nút
+        */
+        int sum, val;
         int child[256 + 5];
     };
 
@@ -36,7 +42,7 @@ struct Trie
 
     node newNode(){
         node a;
-        a.num = 0;
+        a.sum = 0;
         a.val = 0;
         for(int i = 0; i < 100; i++)
             a.child[i] = -1;
@@ -51,7 +57,7 @@ struct Trie
     void addWord(string s){
         int index = 0;
         for(int i = 0; i < s.size(); i++){
-            tree[index].num++;
+            tree[index].sum++;
             int w = convert(s[i]);
             if(tree[index].child[w] == -1){
                 tree.push_back(newNode());
@@ -59,7 +65,7 @@ struct Trie
             }
             index = tree[index].child[w];
         }
-        tree[index].num++;
+        tree[index].sum++;
         tree[index].val++;
     }
 
@@ -70,7 +76,7 @@ struct Trie
             if(tree[index].child[w] == -1) return 0;
             index = tree[index].child[w];
         }
-        return tree[index].num;
+        return tree[index].sum;
     }
 
     int countWord(string s){
@@ -87,11 +93,11 @@ struct Trie
         if(countPrefix(s) == 0) return;
         int index = 0;
         for(int i = 0; i < s.size(); i++){
-            tree[index].num--;
+            tree[index].sum--;
             int w = convert(s[i]);
             index = tree[index].child[w];
         }
-        tree[index].num--;
+        tree[index].sum--;
         tree[index].val--;
     }
 
